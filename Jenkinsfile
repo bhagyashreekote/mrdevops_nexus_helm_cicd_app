@@ -4,7 +4,7 @@ pipeline{
 
     stages{
 
-        stage('soanr qulity check')
+        stage('sonar qulity check'){
             agent{
 
                 docker{
@@ -12,6 +12,7 @@ pipeline{
                 }
             }
             steps{
+
                 scripts{
                    withSonarQubeEnv(credentialsId: 'sonar-token') {
                         sh 'mvn clean package sonar:sonar'
@@ -19,10 +20,7 @@ pipeline{
                 }
 
             }
-
+        }
     }
-
-
-
 
 }
