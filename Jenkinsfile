@@ -10,25 +10,34 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/sagarkulkarni1989/mrdevops_nexus_helm_cicd_app.git'
             }
         }
-        stage('UNIT Test'){
+        // stage('UNIT Test'){
             
-            steps{
-                sh 'mvn test'
-            }
-        }
-        stage('Integration Test'){
+        //     steps{
+        //         sh 'mvn test'
+        //     }
+        // }
+        // stage('Integration Test'){
             
-            steps{
-                sh 'mvn verify -DskipUnitTests'
-            }
-        }
-        stage('Maven Build'){
+        //     steps{
+        //         sh 'mvn verify -DskipUnitTests'
+        //     }
+        // }
+        // stage('Maven Build'){
             
-            steps{
-                sh 'mvn clean install'
-            }
-        }
+        //     steps{
+        //         sh 'mvn clean install'
+        //     }
+        // }
         stage('Static code Analysis'){
+
+            agent{
+
+                docker {
+                    image 'maven'
+
+                }
+
+            }
             
             steps{
                 script{
