@@ -1,10 +1,10 @@
 pipeline{
 
     agent any
-    environment {
+    // environment {
 
-        VERSION = "${env.BUILD_ID}"
-    }
+    //     VERSION = "${env.BUILD_ID}"
+    // }
 
     stages{
 
@@ -69,35 +69,35 @@ pipeline{
                 
             
         }
-        stage('docker build & docker push to Nexus repo'){
+        // stage('docker build & docker push to Nexus repo'){
 
-            steps{
+        //     steps{
 
-                script{
-                    withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) {
-                         sh '''
-                            docker build -t 3.108.55.62:8083/springapp:${VERSION} . 
+        //         script{
+        //             withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) {
+        //                  sh '''
+        //                     docker build -t 3.108.55.62:8083/springapp:${VERSION} . 
 
-                            docker login -u admin -p $nexus_creds 3.108.55.62:8083 
+        //                     docker login -u admin -p $nexus_creds 3.108.55.62:8083 
 
-                            docker push 3.108.55.62:8083/springapp:${VERSION}
+        //                     docker push 3.108.55.62:8083/springapp:${VERSION}
 
-                            docker rmi 3.108.55.62:8083/springapp:${VERSION}
+        //                     docker rmi 3.108.55.62:8083/springapp:${VERSION}
 
-                         '''
-
-
-
-                    }
+        //                  '''
 
 
-                }
-            }
+
+        //             }
+
+
+        //         }
+        //     }
 
            
 
 
-        }
+        // }
         // stage('Identiying misconfigs using datree in helm charts'){
 
         //     steps{
@@ -120,35 +120,35 @@ pipeline{
         //     }
         // }
 
-           stage(' Pushing the helm chart to nexus repo'){
+        //    stage(' Pushing the helm chart to nexus repo'){
 
-                steps{
+        //         steps{
 
-                    script{
+        //             script{
 
-                             withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) {
+        //                      withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) {
 
-                                 dir('kubernetes/myapp/') {
+        //                          dir('kubernetes/myapp/') {
 
-                                     sh '''
+        //                              sh '''
 
-                                     helmversion=${helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' ' }
-                                     tar -czvf myapp-${helmversion}.tgz myapp/
-                                     curl -u admin:$nexus_creds http://3.108.55.62:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v
+        //                              helmversion=${helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' ' }
+        //                              tar -czvf myapp-${helmversion}.tgz myapp/
+        //                              curl -u admin:$nexus_creds http://3.108.55.62:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v
 
-                                    '''
+        //                             '''
 
-                                }
+        //                         }
 
-                            }
+        //                     }
 
                   
 
-                    }
-                }
+        //             }
+        //         }
 
 
-           }
+        //    }
        
     }
 
