@@ -32,43 +32,78 @@ pipeline{
         //         sh 'mvn clean install'
         //     }
         // }
-        stage('Static code Analysis'){
+        // stage('Static code Analysis'){
 
-            agent{
+        //     agent{
 
-                docker {
-                    image 'maven'
+        //         docker {
+        //             image 'maven'
 
-                }
+        //         }
 
-            }
+        //     }
             
-            steps{
-                script{
-                    withSonarQubeEnv(credentialsId: 'sonar-token'){
-                     sh 'mvn clean package sonar:sonar'   
-                    }
-                }
+        //     steps{
+        //         script{
+        //             withSonarQubeEnv(credentialsId: 'sonar-token'){
+        //              sh 'mvn clean package sonar:sonar'   
+        //             }
+        //         }
                 
    
-            }
+        //     }
                 
             
-        }
-        stage('Quality gate'){
+        // }
+        // stage('Quality gate'){
             
-            steps{
-                script{
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+        //     steps{
+        //         script{
+        //             waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                      
                     
-                }
+        //         }
                 
    
-            }
+        //     }
                 
             
-        }
+        // }
+             stage('Static code analysis'){
+            
+                steps{
+                
+                     script{
+                    
+                        withSonarQubeEnv(credentialsId: 'sonar-api') {
+                        
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                   }
+                    
+                }
+            }
+            stage('Quality Gate Status'){
+                
+                steps{
+                    
+                    script{
+                        
+                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                    }
+                }
+            } 
+
+
+
+
+
+
+
+
+
+
+
         // stage('docker build & docker push to Nexus repo'){
 
         //     steps{
