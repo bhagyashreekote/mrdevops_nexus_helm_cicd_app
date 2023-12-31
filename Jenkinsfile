@@ -11,7 +11,7 @@ pipeline{
         stage('GIT checkout'){
 
             steps{
-                git branch: 'main', url: 'https://github.com/sagarkulkarni1989/mrdevops_nexus_helm_cicd_app.git'
+                git branch: 'main', url: 'https://github.com/bhagyashreekote/mrdevops_nexus_helm_cicd_app.git'
             }
         }
          stage('Code Compile') {
