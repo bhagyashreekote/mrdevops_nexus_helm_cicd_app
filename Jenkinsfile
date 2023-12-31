@@ -14,47 +14,47 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/sagarkulkarni1989/mrdevops_nexus_helm_cicd_app.git'
             }
         }
-        // stage('UNIT Test'){
+        stage('UNIT Test'){
             
-        //     steps{
-        //         sh 'mvn test'
-        //     }
-        // }
+            steps{
+                sh 'mvn test'
+            }
+        }
         // stage('Integration Test'){
             
         //     steps{
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
-        // stage('Maven Build'){
+        stage('Maven Build'){
             
-        //     steps{
-        //         sh 'mvn clean install'
-        //     }
-        // }
-        // stage('Static code Analysis'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage('Static code Analysis'){
 
-        //     agent{
+            agent{
 
-        //         docker {
-        //             image 'maven'
+                docker {
+                    image 'maven'
 
-        //         }
+                }
 
-        //     }
+            }
             
-        //     steps{
-        //         script{
-        //             withSonarQubeEnv(credentialsId: 'sonar-token'){
-        //              sh 'mvn clean package sonar:sonar'   
-        //             }
-        //         }
+            steps{
+                script{
+                    withSonarQubeEnv(credentialsId: 'sonar-token'){
+                     sh 'mvn clean package sonar:sonar'   
+                    }
+                }
                 
    
-        //     }
+            }
                 
             
-        // }
+        }
         // stage('Quality gate'){
             
         //     steps{
@@ -69,30 +69,30 @@ pipeline{
                 
             
         // }
-             stage('Static code analysis'){
+            //  stage('Static code analysis'){
             
-                steps{
+            //     steps{
                 
-                     script{
+            //          script{
                     
-                        withSonarQubeEnv(credentialsId: 'sonar-token') {
+            //             withSonarQubeEnv(credentialsId: 'sonar-token') {
                         
-                        sh 'mvn clean package sonar:sonar'
-                    }
-                   }
+            //             sh 'mvn clean package sonar:sonar'
+            //         }
+            //        }
                     
-                }
-            }
-            stage('Quality Gate Status'){
+            //     }
+            // }
+            // stage('Quality Gate Status'){
                 
-                steps{
+            //     steps{
                     
-                    script{
+            //         script{
                         
-                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
-                    }
-                }
-            } 
+            //             waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+            //         }
+            //     }
+            // } 
 
 
 
