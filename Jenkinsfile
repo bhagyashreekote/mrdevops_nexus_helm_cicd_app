@@ -156,7 +156,7 @@ pipeline{
                     withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
                         
                         sh "docker build -t simple-app ."
-                        sh "docker tag petclinic gita/simple-app:latest "
+                        sh "docker tag simple-app gita/simple-app:latest "
                         sh "docker push gita/simple-app:latest "
    
                     }
