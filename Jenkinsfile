@@ -14,24 +14,40 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/sagarkulkarni1989/mrdevops_nexus_helm_cicd_app.git'
             }
         }
-        stage('UNIT Test'){
-            
-            steps{
-                sh 'mvn test'
+         stage('Code Compile') {
+            steps {
+                sh "mvn clean compile"
             }
         }
+        stage('Unit test and jacoco') {
+            steps {
+                sh "mvn test"
+            }
+            post {
+              always {
+                    junit 'target/surefire-reports/*.xml'
+                    jacoco execPattern: 'target/jacoco.exec'
+              }
+            }
+        }
+        // stage('UNIT Test'){
+            
+        //     steps{
+        //         sh 'mvn test'
+        //     }
+        // }
         // stage('Integration Test'){
             
         //     steps{
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
-        stage('Maven Build'){
+        // stage('Maven Build'){
             
-            steps{
-                sh 'mvn clean install'
-            }
-        }
+        //     steps{
+        //         sh 'mvn clean install'
+        //     }
+        // }
         // stage('Static code Analysis'){
 
         //     agent{
