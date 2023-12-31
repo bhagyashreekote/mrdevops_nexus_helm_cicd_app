@@ -149,20 +149,20 @@ pipeline{
 
 
         // }
-         stage("Docker Build"){
-            steps{
-                script {
+        //  stage("Docker Build"){
+        //     steps{
+        //         script {
                     
-                    withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
+        //             withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
                         
-                        sh "docker build -t simple-app ."
-                        sh "docker tag simple-app gita/simple-app:latest "
-                        sh "docker push gita/simple-app:latest "
+        //                 sh "docker build -t simple-app ."
+        //                 sh "docker tag simple-app gita/simple-app:latest "
+        //                 sh "docker push gita/simple-app:latest "
    
-                    }
-                }
-            }
-        }
+        //             }
+        //         }
+        //     }
+        // }
         // stage('Identiying misconfigs using datree in helm charts'){
 
         //     steps{
